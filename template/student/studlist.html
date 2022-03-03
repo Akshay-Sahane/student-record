@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}
+List
+{% endblock title %}
+
+{% block body %}
+<div class="container">
+    {% include 'student/messages.html' %}
+    <h1 class="text-dark">student details</h1>
+ <table class="table table-dark">
+     <tr>
+         <th><h4>Stud-ID</h4></th>
+         <th><h4>Stud-Name</h4>
+         <a href="/student/studsortasc"><i class="fa-solid fa-arrow-up"></i></a>
+         <a href="/student/studsortdesc"><i class="fa-solid fa-arrow-down"></i></a>
+         </th>
+         <th><h4>Stud-Class</h4></th>
+         <th><h4>Stud-Age</h4></th>
+         <th colspan="3" class="text-center"><h4 class="me-5">Action</h4></th>
+     </tr>
+     
+         {% for stud in slist %}
+            <tr>
+                <td><h5>{{ stud.SId }}</h5></td>
+                <td><h5>{{ stud.SName }}</h5></td>
+                <td><h5>{{ stud.SClass }}</h5></td>
+                <td><h5>{{ stud.SAge }}</h5></td>
+                <td><h5><a class="btn btn-danger" href="/student/deletestud/{{stud.SId}}"><i class="fa-solid fa-trash"></i> Delete</a></h5></td>
+                <td><h5><a class="btn btn-info bg-light" href="/student/updatestud/{{stud.SId}}"><i class="fa-solid fa-pen-to-square"></i> Update</a></h5></td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="5"><h4>No student found!</h4></td>
+            </tr>
+
+         {% endfor %}
+     </tr>
+ </table>
+</div>
+ {% endblock body %}
