@@ -8,6 +8,7 @@ from .forms import StudentForm
 from django.shortcuts import redirect
 from django.contrib import messages
 
+#add new entry of student
 def addstud(req):
     if req.method=='POST':
         form=StudentForm(data=req.POST)
@@ -24,15 +25,13 @@ def addstud(req):
         context={'form':form}
         return render(req,'student/addstud.html',context)
 
-
+#display all student record
 def studlist(req):
     slist=Student.objects.all()
     context={'slist':slist}
     return render(req,'student/studlist.html',context)
 
-
-
-
+#delete student record
 def deletestud(req,SId):
     stud=Student.objects.filter(SId=SId)[0]
     if req.method=='GET':
@@ -44,7 +43,7 @@ def deletestud(req,SId):
         return redirect('studlist')
 
 
-
+#update student details
 def editstud(req,SId):
         if req.method=='GET':
             stud=Student.objects.get(SId=SId)
@@ -63,17 +62,19 @@ def editstud(req,SId):
                 messages.error(req,"somethong went wrong try again")
                 return render(req,'student/addstud.html',context)
 
-
+#sort data in ascending order
 def asc(req):
     slist=Student.objects.order_by('SName')
     context={'slist':slist}
     return render(req,'student/studlist.html',context)
 
+#sort data in descending order
 def desc(req):
     slist=Student.objects.order_by('-SName')
     context={'slist':slist}
     return render(req,'student/studlist.html',context)
 
+#serach for a student record 
 def studsearch(req):
     q=req.GET['q']
     slist=Student.objects.filter(SName__contains=q)
